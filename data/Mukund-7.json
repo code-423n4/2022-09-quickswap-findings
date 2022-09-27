@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "Mukund",
+  "address": "0x89f4caf7d363df94713522b34fc6888ac37e1d44",
+  "risk": "2",
+  "title": "OWNER CAN SET NEW OWNER WITH ZERO ADDRESS",
+  "issueId": 7,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/7"
+}
