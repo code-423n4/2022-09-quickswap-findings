@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "ch13fd357r0y3r",
+  "address": "0xba23dfd7cccd3587a1b8909dd5bccfd92aceae6f",
+  "risk": "3",
+  "title": "Possible Integer OverFlow and UnderFlow on Multiple lines of AlgebraPool.sol ",
+  "issueId": 8,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/8"
+}
