@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "RaymondFam",
+  "address": "0x1500aea18ecf78c8508b6d1559e0462f63fe5d15",
+  "risk": "2",
+  "title": "Zero Address Check at the Constructor",
+  "issueId": 23,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/23"
+}
