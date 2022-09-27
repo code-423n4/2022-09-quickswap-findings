@@ -11,3 +11,13 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 `
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L86
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L93
+
+## NO ERROR MESSAGE PROVIDED
+In require there is no error message function will revert if required condition is not fulfilled without any error.
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L43
+`require(msg.sender == owner);`
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L62
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L92
+
+Recommendation
+use appropriate error in require so that user will now the cause of revert.
