@@ -1,5 +1,5 @@
 ## Use Custom Errors Instead of Require to Save Gas
-Consider replacing all require statements with custom errors which are cheaper both in deployment and runtime cost starting from Solidity 0.8.4. Here are some of the instances entailed:
+Consider using Solidity 0.8.4 and above and replacing all require statements with custom errors which are cheaper both in deployment and runtime cost. Here are some of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L109
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L935
@@ -104,12 +104,13 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/lib
         current.volumePerLiquidityCumulative
       );
 
+      // Unchecked math if using Solidity 0.8.0 and above
       unchecked {
               ++i;
           }
     }
 ```
-Note: "Checked" math, which is default in 0.8.0 is not free. The compiler will add some overflow checks, somehow similar to those implemented by `SafeMath`. While it is reasonable to expect these checks to be less expensive than the current `SafeMath`, one should keep in mind that these checks will increase the cost of "basic math operation" that were not previously covered. This particularly concerns variable increments in for loops. Considering no arithmetic overflow/underflow is going to happen here, `unchecked { ++i ;}` to use the previous wrapping behavior further saves gas in the above for loop.
+Note: If using Solidity ^0.8.0, the default "checked" math is not free. The compiler will add some overflow checks, somehow similar to those implemented by `SafeMath`. While it is reasonable to expect these checks to be less expensive than the current `SafeMath`, one should keep in mind that these checks will increase the cost of "basic math operation" that were not previously covered. This particularly concerns variable increments in for loops. Considering no arithmetic overflow/underflow is going to happen here, `unchecked { ++i ;}` to use the previous wrapping behavior further saves gas in the above for loop.
 
 ## No Need to Initialize Variables with Default Values
 If a variable is not set/initialized, it is assumed to have the default value (0, false, 0x0 etc depending on the data type). If you explicitly initialize it with its default value, you will be incurring more gas. Here is one of the instances entailed:
