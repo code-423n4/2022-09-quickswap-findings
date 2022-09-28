@@ -1,0 +1,3 @@
+- In `AlgebraFactory.setOwner`, consider implementing a two-step ownership change process (with a confirmation from the new owner). Otherwise, you risk that the owner is set to a wrong address, which will be non-recoverable.
+- In `AlgebraFactory.createPool`, it is checked that `token0` (the one with the lower address) is not zero. It would be better to require that `token1` (the one with the higher address) is not zero, as this would ensure that both are not zero. Currently, `token1` can be zero, as long as `token0` is not.
+- The system uses `uint32` for timestamps. This will only work until February 2106 and the contracts will be unusable afterwards.
