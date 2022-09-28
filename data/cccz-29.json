@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "cccz",
+  "address": "0x74d754378a59ab45d3e6cac83f0b87e8e8719270",
+  "risk": "2",
+  "title": "When receivedAmount0 < amount0 and receivedAmount1 < amount1, the liquidity provided by the user will be less than expected",
+  "issueId": 29,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/29"
+}
