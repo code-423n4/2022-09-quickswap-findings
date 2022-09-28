@@ -2,11 +2,13 @@
 Consider replacing all require statements with custom errors which are cheaper both in deployment and runtime cost starting from Solidity 0.8.4. Here are some of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L109
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L935
 
 ## Splitting Require Statements Using && Saves Gas
 Instead of using the && operator in a single require statement to check multiple conditions, using multiple require statements with 1 condition per require statement will save 3 GAS per &&. Here are some pf the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L110
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L953
 
 ## Function Order Affects Gas Consumption
 The order of function will also have an impact on gas consumption. Because in smart contracts, there is a difference in the order of the functions. Each position will have an extra 22 gas. The order is dependent on method ID. So, if you rename the frequently accessed function to more early method ID, you can save gas cost. Please visit the following site for further information:
@@ -48,5 +50,69 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
         _;
     }
 ```
+## Non-strict inequalities are cheaper than strict ones
+In the EVM, there is no opcode for non-strict inequalities (>=, <=) and two operations are performed (> + = or < + =). As an example, consider replacing >= with the strict counterpart > in the following line of code:
 
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L229
+
+```
+          require((_blockTimestamp() - lastLiquidityAddTimestamp) > _liquidityCooldown - 1);
+```
+Similarly, as an example, consider replacing <= with the strict counterpart < in the following line of code:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L608
+
+```
+      require(balance0Before.add(uint256(amount0)) < balanceToken0() + 1, 'IIA');
+```
+## += Costs More Gas
+`+=` generally costs more gas than writing out the assigned equation explicitly. As an example, the following line of code could be rewritten as:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L811
+
+```
+        communityFeeAmount = communityFeeAmount + delta;
+```
+Similarly, as an example, the following line of code could be rewritten as:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L936
+
+```
+    paid1 = paid1 - balance1Before;
+```
+## calldata and memory
+When running a function we could pass the function parameters as calldata or memory for variables such as strings, bytes, structs, arrays etc. If we are not modifying the passed parameter we should pass it as calldata because calldata is more gas efficient than memory. Here is one of the instances entailed:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/DataStorageOperator.sol#L90
+
+## ++i costs less gas compared to i++
+++i costs less gas compared to i++ or i += 1 for unsigned integers considering the pre-increment operation is cheaper (about 5 GAS per iteration).
+
+i++ increments i and makes the compiler create a temporary variable for returning the initial value of i. In contrast, ++i returns the actual incremented value without making the compiler do extra job.
+
+As an example, the for loop below could be refactored as follows:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L307-L315
+
+```
+    for (uint256 i = 0; i < secondsAgos.length;) {
+      current = getSingleTimepoint(self, time, secondsAgos[i], tick, index, oldestIndex, liquidity);
+      (tickCumulatives[i], secondsPerLiquidityCumulatives[i], volatilityCumulatives[i], volumePerAvgLiquiditys[i]) = (
+        current.tickCumulative,
+        current.secondsPerLiquidityCumulative,
+        current.volatilityCumulative,
+        current.volumePerLiquidityCumulative
+      );
+
+      unchecked {
+              ++i;
+          }
+    }
+```
+Note: "Checked" math, which is default in 0.8.0 is not free. The compiler will add some overflow checks, somehow similar to those implemented by `SafeMath`. While it is reasonable to expect these checks to be less expensive than the current `SafeMath`, one should keep in mind that these checks will increase the cost of "basic math operation" that were not previously covered. This particularly concerns variable increments in for loops. Considering no arithmetic overflow/underflow is going to happen here, `unchecked { ++i ;}` to use the previous wrapping behavior further saves gas in the above for loop.
+
+## No Need to Initialize Variables with Default Values
+If a variable is not set/initialized, it is assumed to have the default value (0, false, 0x0 etc depending on the data type). If you explicitly initialize it with its default value, you will be incurring more gas. Here is one of the instances entailed:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L307
 
