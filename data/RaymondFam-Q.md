@@ -7,7 +7,10 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 Consider using the latest released version of Solidity. Apart from exceptional cases, only the latest version receives security fixes. Furthermore, breaking changes as well as new features are introduced regularly.
 
 ## Require Error Message
-Consider making the require error message more verbose so all other peer developers would better be able to comprehend the intended statement logic. But, do limit the message length to less than 32 character where possible as strings that are more than 32 characters will require more than 1 storage slot, costing more gas.
+Consider making the require error message more verbose so all other peer developers would better be able to comprehend the intended statement logic. But, do limit the message length to less than 32 character where possible as strings that are more than 32 characters will require more than 1 storage slot, costing more gas. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L194
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L224
 
 ## Zero Address Checks
 Implement zero address checks for all setter functions where possible to avoid accidental error(s) that could result in non-functional calls associated with it. Here are some of the instances entailed:
@@ -24,3 +27,8 @@ The comments associated with the following code lines should have "... to a LP" 
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L46-L47
 
+## Missing Require Error Message
+Consider adding a less than 32 character string message to all require statements just so that a relevant message would be displayed just in case of a revert. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L229
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L960
