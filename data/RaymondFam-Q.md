@@ -18,3 +18,9 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 Consider having events associated with setter functions emit both the new and old values instead of just the new value. Here are some of the few instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L77-L95
+
+## Typo Mistakes
+The comments associated with the following code lines should have "... to a LP" replaced with "... to an LP":
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L46-L47
+
