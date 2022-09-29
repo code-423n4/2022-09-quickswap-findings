@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "s3cunda",
+  "address": "0x02c725c77e25f39996e823dd91304da158a45598",
+  "risk": "3",
+  "title": "AlgebraPool.initialize function may suffer from front run, which can result in unintended price manipulation.",
+  "issueId": 63,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/63"
+}
