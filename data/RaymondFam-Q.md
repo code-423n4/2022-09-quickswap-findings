@@ -32,3 +32,31 @@ Consider adding a less than 32 character string message to all require statement
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L229
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L960
+
+## LowGasSafeMath for Other Bit Size Integer
+As an example, consider using `LowGasSafeMath` for uint160 and uint32 for the following instances that involve arithmetic operation just in case of underflow:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L110-L111
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L142-L143
+
+## Unnecessary Bitwise Or Logic
+`(amount0 | amount1 != 0)` in the following code logic is similar to `(amount0 ! =0 || amount0 !=0)`.
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L501-L507
+
+For simplicity, it should be refactored as follows:
+
+```
+if (amount0 != 0) {
+  position.fees0 = positionFees0 - amount0;
+  TransferHelper.safeTransfer(token0, recipient, amount0);
+}
+
+if (amount1 != 0) {
+  position.fees1 = positionFees1 - amount1;
+  TransferHelper.safeTransfer(token1, recipient, amount1);
+}
+``` 
+There are two benefits of doing this:
+1. Only one condition check is needed for amount0 and amount1.
+2. If one of the conditions failed, it didn't have to go through the unnecessary steps of running line 502/503 and line 505/506.
