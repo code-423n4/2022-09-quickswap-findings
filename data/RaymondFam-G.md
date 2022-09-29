@@ -141,7 +141,7 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 ## Using Booleans Costs More Storage Overhead
 According to Openzeppelin's `ReentrancyGuard.sol`:
 
-https://github.com/OpenZeppelin/openzeppelin-contracts/blob/58f635312aa21f947cae5f8578638a85aa2519f5/contracts/security/ReentrancyGuard.sol#L23-L35
+https://github.com/OpenZeppelin/openzeppelin-contracts/blob/58f635312aa21f947cae5f8578638a85aa2519f5/contracts/security/ReentrancyGuard.sol#L23-L27
 
     // Booleans are more expensive than uint256 or any type that takes up a full
     // word because each write operation emits an extra SLOAD to first read the
@@ -149,20 +149,12 @@ https://github.com/OpenZeppelin/openzeppelin-contracts/blob/58f635312aa21f947cae
     // back. This is the compiler's defense against contract upgrades and
     // pointer aliasing, and it cannot be disabled.
 
-    // The values being non-zero value makes deployment a bit more expensive,
-    // but in exchange the refund on every call to nonReentrant will be lower in
-    // amount. Since refunds are capped to a percentage of the total
-    // transaction's gas, it is best to keep them low in cases like this one, to
-    // increase the likelihood of the full refund coming into effect.
+Consider using uint256(1) and uint256(2) for true/false to avoid repeated:
 
-Consider using uint256(1) and uint256(2) for true/false to avoid:
-
-1. repeated Gwarmaccess  that would cost 100 gas each, and
-2. Gsset that would cost 20000 gas when changing from ‘false’ to ‘true’, as well as after having been ‘true’ in the past. 
+1. Gwarmaccess that would cost 100 gas for a warm account or storage access, and
+2. Gsset that would cost 20,000 gas for an SSTORE operation switching the storage value to non-zero from zero, i.e, ‘false’ to ‘true’.
 
 Here are some of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L15
-https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L98
-https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L161
-https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L166
+
