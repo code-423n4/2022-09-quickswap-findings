@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "Trust",
+  "address": "0x2fca32d86d133394f6548028a31b95adf3cc5efc",
+  "risk": "3",
+  "title": "Attacker can always brick uninitialized pairs, requiring factory / pair redeploy ",
+  "issueId": 78,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/78"
+}
