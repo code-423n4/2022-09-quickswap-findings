@@ -1,4 +1,4 @@
-Total Low Severity Findings: 3
+Total Low Severity Findings: 4
 Total Non-Critical Severity Findings: 6
 
 ## (1) Missing Checks for Address(0x0) 
@@ -94,8 +94,15 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/Alg
 ## Recommended Mitigation Steps
 Lack of two-step procedure for critical operations leaves them error-prone. Consider adding two step procedure on the critical functions.
 
+## (4) Use SafeMath 
+Severity: Low
 
-## (4) Variable Names That Consist Of All Capital Letters Should Be Reserved For Const/immutable Variables
+The Algebra contracts are heavily math-based contracts, it is recommended to use SafeMath to avoid potential overflows/underflows.
+
+## Recommended mitigation steps
+Apply safemath or move to solidity 0.8.x
+
+## (5) Variable Names That Consist Of All Capital Letters Should Be Reserved For Const/immutable Variables
 
 Severity: Non-Critical
 
@@ -109,7 +116,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/Alg
 
 
 
-## (5) Missing parameter validation
+## (6) Missing parameter validation
 
 Severity: Non-Critical
 
@@ -136,7 +143,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/bas
 Validate the parameters.
 
 
-## (6) Non-usage of specific imports
+## (7) Non-usage of specific imports
 
 Severity: Non-Critical
 
@@ -234,7 +241,7 @@ Use specific imports syntax per solidity docs recommendation.
 
 
 
-## (7) Use a more recent version of Solidity
+## (8) Use a more recent version of Solidity
 
 Severity: Non-Critical
 
@@ -292,7 +299,7 @@ Consider updating to a more recent solidity version.
 
 
 
-## (8) Require()/revert() Statements Should Have Descriptive Reason Strings
+## (9) Require()/revert() Statements Should Have Descriptive Reason Strings
 
 Severity: Non-Critical
 
@@ -463,7 +470,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/lib
 
 
 
-## (9) Large multiples of ten should use scientific notation
+## (10) Large multiples of ten should use scientific notation
 
 Severity: Non-Critical
 
