@@ -35,6 +35,21 @@ Please visit the following site for further information:
 
 https://docs.soliditylang.org/en/v0.5.4/using-the-compiler.html#using-the-commandline-compiler
 
+Here's one example of instance on opcode comparison that delineates the gas saving mechanism:
+ 
+for !=0 before optimization
+PUSH1 0x00
+DUP2
+EQ
+ISZERO
+PUSH1 [cont offset]
+JUMPI 
+
+after optimization
+DUP1
+PUSH1 [revert offset]
+JUMPI
+
 ## Private Function Embedded Modifier to Reduce Contract Size
 Consider having the logic of a modifier embedded through an internal or private function to reduce contract size if need be. For instance, the following instance of modifier may be rewritten as follows:
 
@@ -116,4 +131,10 @@ Note: If using Solidity ^0.8.0, the default "checked" math is not free. The comp
 If a variable is not set/initialized, it is assumed to have the default value (0, false, 0x0 etc depending on the data type). If you explicitly initialize it with its default value, you will be incurring more gas. Here is one of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L307
+
+## > 0 Is More Expensive Than != 0 for Unsigned Integers
+!= 0 costs 6 less GAS compared to > 0 for unsigned integers in conditional statements with the optimizer enabled. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L451-L452
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L454-L455
 
