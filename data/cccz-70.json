@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "cccz",
+  "address": "0x74d754378a59ab45d3e6cac83f0b87e8e8719270",
+  "risk": "3",
+  "title": "Malicious users can provide liquidity on behalf of others to keep others in the liquidity cooldown",
+  "issueId": 70,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/70"
+}
