@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "trustindistrust",
+  "address": "0xe6dda86eadc3b6b54a8e5757ad0ba9d4d073c8e3",
+  "risk": "2",
+  "title": "`AlgebraPool._recalculatePosition()` fee accumulator can overflow, denying position holder earned fees.",
+  "issueId": 117,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/117"
+}
