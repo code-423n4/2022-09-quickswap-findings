@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "kaden",
+  "address": "0x3111327edd38890c3fe564afd96b4c73e8101747",
+  "risk": "2",
+  "title": "Owner role could become indefinitely locked due to missing ownership transfer method",
+  "issueId": 104,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/104"
+}
