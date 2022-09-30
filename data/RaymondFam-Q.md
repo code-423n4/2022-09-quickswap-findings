@@ -1,5 +1,5 @@
 ## Two-step Transfer of Ownership
-`setOwner()` should be implemented giving ownership to another address in a pending state. And then, a `claimOwner()` should be introduced for the new owner to claim ownership. This will ensure the new owner is going to be fully aware of the ownership assigned/transferred.
+`setOwner()` should be implemented giving ownership to another address in a pending state. And then, a `claimOwner()` should be introduced for the newly nominated owner to claim ownership. This will ensure the new owner is going to be fully aware of the ownership assigned/transferred. Additionally, the risk of having the ownership transferred to an invalid address that would cause the contract to be without an owner will be avoided.
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L77-L81
 
