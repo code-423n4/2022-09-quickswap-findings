@@ -60,3 +60,13 @@ if (amount1 != 0) {
 There are two benefits of doing this:
 1. Only one condition check is needed for amount0 and amount1.
 2. If one of the conditions failed, it didn't have to go through the unnecessary steps of running line 502/503 and line 505/506.
+
+##  Missing NatSpec
+Solidity contracts can use a special form of comments, i.e., the Ethereum Natural Language Specification Format (NatSpec) to provide rich documentation for functions, return variables and more. Please visit the following link for further details:
+
+https://docs.soliditylang.org/en/v0.8.16/natspec-format.html
+
+The following contract is found to be having inadequate NatSpec:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/Constants.sol
+
