@@ -1,4 +1,4 @@
-Total Low Severity Findings: 4
+Total Low Severity Findings: 5
 Total Non-Critical Severity Findings: 6
 
 ## (1) Missing Checks for Address(0x0) 
@@ -58,7 +58,37 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/lib
 
 Consider adding a mapping of who can call these create functions to avoid malicious use
 
-## (3) Critical Changes Should Use Two-step Procedure
+## (3) Low level calls with solidity version under 0.8.14 can result in optimizer bug
+
+Severity: Low
+
+Algebra contracts are using low level calls with solidity version before 0.8.14 which can result in optimizer bug.
+https://medium.com/certora/overly-optimistic-optimizer-certora-bug-disclosure-2101e3f7994d
+
+## Proof of Concept
+
+For example a low level call in AlgebraPool.sol:
+
+	pragma solidity =0.7.6;
+	…
+	  function getOrCreatePosition(
+	    address owner,
+	    int24 bottomTick,
+	    int24 topTick[]
+	  ) private view returns (Position storage) {
+	    bytes32 key;
+	    assembly {
+	      key := or(shl(24, or(shl(24, owner), and(bottomTick, 0xFFFFFF))), and(topTick, 0xFFFFFF))
+	    }
+	    return positions[key];
+	  }
+
+
+POC can be found in the above medium reference url.
+## Recommended Mitigation Steps
+Consider upgrading to at least solidity v0.8.15.
+
+## (4) Critical Changes Should Use Two-step Procedure
 
 Severity: Low
 
@@ -94,7 +124,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/Alg
 ## Recommended Mitigation Steps
 Lack of two-step procedure for critical operations leaves them error-prone. Consider adding two step procedure on the critical functions.
 
-## (4) Use SafeMath 
+## (5) Use SafeMath 
 Severity: Low
 
 The Algebra contracts are heavily math-based contracts, it is recommended to use SafeMath to avoid potential overflows/underflows.
@@ -102,7 +132,7 @@ The Algebra contracts are heavily math-based contracts, it is recommended to use
 ## Recommended mitigation steps
 Apply safemath or move to solidity 0.8.x
 
-## (5) Variable Names That Consist Of All Capital Letters Should Be Reserved For Const/immutable Variables
+## (6) Variable Names That Consist Of All Capital Letters Should Be Reserved For Const/immutable Variables
 
 Severity: Non-Critical
 
@@ -116,7 +146,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/Alg
 
 
 
-## (6) Missing parameter validation
+## (7) Missing parameter validation
 
 Severity: Non-Critical
 
@@ -143,7 +173,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/bas
 Validate the parameters.
 
 
-## (7) Non-usage of specific imports
+## (8) Non-usage of specific imports
 
 Severity: Non-Critical
 
@@ -241,7 +271,7 @@ Use specific imports syntax per solidity docs recommendation.
 
 
 
-## (8) Use a more recent version of Solidity
+## (9) Use a more recent version of Solidity
 
 Severity: Non-Critical
 
@@ -299,7 +329,7 @@ Consider updating to a more recent solidity version.
 
 
 
-## (9) Require()/revert() Statements Should Have Descriptive Reason Strings
+## (10) Require()/revert() Statements Should Have Descriptive Reason Strings
 
 Severity: Non-Critical
 
@@ -470,7 +500,7 @@ https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/lib
 
 
 
-## (10) Large multiples of ten should use scientific notation
+## (11) Large multiples of ten should use scientific notation
 
 Severity: Non-Critical
 
