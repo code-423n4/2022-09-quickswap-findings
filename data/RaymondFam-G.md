@@ -1,5 +1,11 @@
 ## Use Custom Errors Instead of Require to Save Gas
-Consider using Solidity 0.8.4 and above and replacing all require statements with custom errors which are cheaper both in deployment and runtime cost. Here are some of the instances entailed:
+Consider using Solidity 0.8.4 and above and replacing all require statements with custom errors which are cheaper both in deployment and runtime cost. Custom errors save about 50 gas each time they’re hit by not needing to allocate and store the revert string. Additionally, not defining the strings also save deployment gas. 
+
+Please visit the following link for additional details:
+
+https://blog.soliditylang.org/2021/04/21/custom-errors/
+
+Here are some of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L109
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L935
@@ -80,8 +86,8 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 ```
       require(balance0Before.add(uint256(amount0)) < balanceToken0() + 1, 'IIA');
 ```
-## += Costs More Gas
-`+=` generally costs more gas than writing out the assigned equation explicitly. As an example, the following line of code could be rewritten as:
+## += and -= Costs More Gas
+`+=` generally costs 22 more gas than writing out the assigned equation explicitly. The amount of gas wasted can be quite sizable when repeatedly operated in a loop. As an example, the following line of code could be rewritten as:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L811
 
@@ -96,7 +102,9 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
     paid1 = paid1 - balance1Before;
 ```
 ## calldata and memory
-When running a function we could pass the function parameters as calldata or memory for variables such as strings, bytes, structs, arrays etc. If we are not modifying the passed parameter we should pass it as calldata because calldata is more gas efficient than memory. Here is one of the instances entailed:
+When running a function we could pass the function parameters as calldata or memory for variables such as strings, bytes, structs, arrays etc. If we are not modifying the passed parameter, we should pass it as calldata because calldata is more gas efficient than memory. 
+
+Calldata is a non-modifiable, non-persistent area where function arguments are stored, and behaves mostly like memory. However, it alleviates the compiler from the `abi.decode()` step that copies each index of the calldata to the memory index, bypassing the cost of 60 gas on each iteration. Here is one of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/DataStorageOperator.sol#L90
 
@@ -157,4 +165,12 @@ Consider using uint256(1) and uint256(2) for true/false to avoid repeated:
 Here are some of the instances entailed:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L15
+
+## Payable Access Control Functions Costs Less Gas
+Consider marking functions with access control as `payable`. This will save 20 gas on each call by their respective permissible callers for not needing to have the compiler check for `msg.value`. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L77
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L84
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L91
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L98-L108
 
