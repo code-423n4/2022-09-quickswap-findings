@@ -5,7 +5,7 @@
 | [G&#x2011;01] | `++i` costs less gas than `i++`, especially when it's used in `for`-loops (`--i`/`i--` too) | 1 |
 | [G&#x2011;04] | `<array>.length` should not be looked up in every loop of a `for`-loop | 1 |
 
-Total:  instances over  issues
+Total: 2 instances over 2 issues
 
 ## [G-01] `++i` costs less gas than `i++`, especially when it's used in `for`-loops (`--i`/`i--` too)
 
