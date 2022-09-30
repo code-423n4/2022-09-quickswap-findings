@@ -4,7 +4,7 @@
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L77-L81
 
 ## Solidity Version
-Consider using the latest released version of Solidity. Apart from exceptional cases, only the latest version receives security fixes. Furthermore, breaking changes as well as new features are introduced regularly.
+Consider using the latest released version of Solidity. Apart from exceptional cases such having the optimizer give better gas optimizations, only the latest version receives security fixes. Furthermore, breaking changes as well as new features are introduced regularly. For instance, contract existence checks (>= 0.8.10) will have external calls skip contract existence checks if the external call has a return value. Additionally, solidity version of at least 0.8.13 features the ability to use `using for` with a list of free functions.
 
 ## Require Error Message
 Consider making the require error message more verbose so all other peer developers would better be able to comprehend the intended statement logic. But, do limit the message length to less than 32 character where possible as strings that are more than 32 characters will require more than 1 storage slot, costing more gas. Here are some of the instances entailed:
