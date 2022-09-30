@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "reassor",
+  "address": "0xd822554abe37b52e34d0c599ec828dc8c46721ff",
+  "risk": "2",
+  "title": "Owner can steal users funds via front-running attack",
+  "issueId": 114,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/114"
+}
