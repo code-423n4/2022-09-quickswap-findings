@@ -21,3 +21,6 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 
 Recommendation
 use appropriate error in require so that user will now the cause of revert.
+
+## `interfaces/IAlgebraPoolDeployer.sol` IS NEVER USED
+In `AlgebraPool` contract `IAlgebraPoolDeployer.sol` is never used it can be removed. Unless there is a plan to use it in the future. 
