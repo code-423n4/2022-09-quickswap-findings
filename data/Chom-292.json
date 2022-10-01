@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "Chom",
+  "address": "0xc4c459668fb29833d7dee997d7d347e2634c9cef",
+  "risk": "2",
+  "title": "tickCumulative may be overflow. New timepoints can't be created and the system will be completely broken.",
+  "issueId": 292,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/292"
+}
