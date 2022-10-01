@@ -8,6 +8,13 @@ https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aa
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPool.sol#L719
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPool.sol#L779
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/DataStorageOperator.sol#L78
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L125
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L218
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L227
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L306
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L341
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L345
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L397
 
 2. Multiple accesses of a mapping/array should use a local variable cache
 
@@ -49,6 +56,9 @@ https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aa
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPool.sol#L811
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L805-L804
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/DataStorageOperator.sol#L45
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L172
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L179
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L184
 
 5. ">=" and "<=" costs less gas than ">" and "<"
 
@@ -169,3 +179,34 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 15. Abi.encode() is less efficient than Abi.encodePacked()
 
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPoolDeployer.sol#L51
+
+16. It costs more gas to initialize variables with their default value than letting the default value be applied
+
+If a variable is not set/initialized, it is assumed to have the default value (0 for uint, false for bool, address(0) for address). Explicitly initializing it with its default value is an anti-pattern and wastes gas.
+
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L307
+
+17. Using cache to contain "array.length"
+
+-storage arrays incur a Gwarmaccess (100 gas)
+-memory arrays use MLOAD (3 gas)
+-calldata arrays use CALLDATALOAD (3 gas)
+
+Caching the length of the array changes it  to a DUP<N> (3 gas), and gets rid of the extra DUP<N> needed to store the stack offset:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L294-L297
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L307
+
+18. For-Loops: Index increments can be left unchecked
+
+From Solidity v0.8 onwards, all arithmetic operations come with implicit overflow and underflow checks.
+In for-loops, as it is impossible for the index to overflow, it can be left unchecked to save gas every iteration.
+
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L307
+
+19. Arithmetics: ++i costs less gas compared to i++
+
+++i costs less gas compared to i++ for unsigned integers, as pre-increment is cheaper.
+
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L307
+
