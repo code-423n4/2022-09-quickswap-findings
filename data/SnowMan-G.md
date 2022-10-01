@@ -199,7 +199,7 @@ https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aa
 
 18. For-Loops: Index increments can be left unchecked
 
-From Solidity v0.8 onwards, all arithmetic operations come with implicit overflow and underflow checks.
+Since SafeMath is used, all arithmetic operations come with implicit overflow and underflow checks.
 In for-loops, as it is impossible for the index to overflow, it can be left unchecked to save gas every iteration.
 
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L307
