@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "Jeiwan",
+  "address": "0xaf8dde65b84ae5d77e4f9a18cdc854e324a41b04",
+  "risk": "3",
+  "title": "Pool price manipulation at zero liquidity can lead to draining of liquidity",
+  "issueId": 134,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/134"
+}
