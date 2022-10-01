@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "rbserver",
+  "address": "0x4bd9605a3e546f3400df2c2be7b1c775aeea56bd",
+  "risk": "2",
+  "title": "User can steal output token when input token is a rebasing token in which algebraSwapCallback can be called to expand total supply of the rebasing token",
+  "issueId": 260,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/260"
+}
