@@ -1,0 +1,3 @@
+    1. Give a error message for 'require(poolByPair[token0][token1] == address(0))' (line 63 of ./core/contracts/AlgebraFactory.sol). The 2 first require of the function do not need a error message, but the require checking if the 
+    pool already exists should return a small message to explain why the tx fails if it fails.
+    2. Use longer and less confusing error message in the requires (ex: 'IIAM2', 'IIL2', 'IIAM', 'LOK', as error message, decrease the overall readability of the code).
