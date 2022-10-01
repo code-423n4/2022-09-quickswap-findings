@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "rbserver",
+  "address": "0x4bd9605a3e546f3400df2c2be7b1c775aeea56bd",
+  "risk": "3",
+  "title": "After pool is initialized, user can perform a sandwich attack through front-running and back-running mint transaction by calling swap function twice to manipulate initial price to be much different than market price and gain much more of output token than expected",
+  "issueId": 251,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/251"
+}
