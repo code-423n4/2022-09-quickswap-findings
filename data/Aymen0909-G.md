@@ -7,14 +7,13 @@
 | 1      | State variables only set in the constructor should be declared `immutable`     | 1 |
 | 2      | Variables inside struct should be packed to save gas     | 1    |
 | 3      | Usage of `uints/ints` smaller than 32 bytes (256 bits) incurs overhead  |  3 |
-| 4      | Use `unchecked` blocks to save gas  |  6 |
-| 5      | `x += y/x -= y` costs more gas than `x = x + y/x = x - y` for state variables  |  4 |
-| 6      | Splitting `require()` statements that uses `&&` saves gas  |  6 |
-| 7      | It costs more gas to initialize variables to zero than to let the default of zero be applied    |  1  |
-| 8      | Use of `++i` cost less gas than `i++` in for loops    |  1  |
-| 9      | ++i/i++ should be unchecked{++i}/unchecked{i++} when it is not possible for them to overflow, as in the case when used in for & while loops |  1  |
-| 10      | Use more recent solidity versions |   |
-| 11      | Functions guaranteed to revert when called by normal users can be marked payable |  12 |
+| 4      | `x += y/x -= y` costs more gas than `x = x + y/x = x - y` for state variables  |  4 |
+| 5      | Splitting `require()` statements that uses `&&` saves gas  |  6 |
+| 6      | It costs more gas to initialize variables to zero than to let the default of zero be applied    |  1  |
+| 7      | Use of `++i` cost less gas than `i++` in for loops    |  1  |
+| 8      | `++i/i++` should be `unchecked{++i}/unchecked{i++}` when it is not possible for them to overflow, as in the case when used in for & while loops |  1  |
+| 9      | Use more recent solidity versions |   |
+| 10      | Functions guaranteed to revert when called by normal users can be marked `payable` |  12 |
 
 ## Findings
 
@@ -104,62 +103,7 @@ File: src/core/contracts/base/PoolState.sol [Line 30](https://github.com/code-42
 uint32 public override liquidityCooldown;
 ```
 
-### 4- Use `unchecked` blocks to save gas :
-
-Solidity version 0.8+ comes with implicit overflow and underflow checks on unsigned integers. When an overflow or an underflow isn’t possible (as an example, when a comparison is made before the arithmetic operation), some gas can be saved by using an unchecked block.
-
-There are 6 instances of this issue:
-
-File: src/core/contracts/libraries/AdaptiveFee.sol [Line 51](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/AdaptiveFee.sol#L51)
-
-```
-x = x - beta;
-```
-
-The above operation cannot underflow due to the check [if (x > beta)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/AdaptiveFee.sol#L50)
-
-File: src/core/contracts/libraries/TokenDeltaMath.sol [Line 52](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TokenDeltaMath.sol#L52)
-
-```
-uint256 priceDelta = priceUpper - priceLower;
-```
-
-The above operation cannot underflow due to the check [require(priceUpper >= priceLower);](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TokenDeltaMath.sol#L51)
-
-File: src/core/contracts/AlgebraPool.sol [Line 377](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L479)
-
-```
-TransferHelper.safeTransfer(token0, sender, receivedAmount0 - amount0);
-```
-
-The above operation cannot underflow due to the check [if (receivedAmount0 > amount0)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L478) 
-
-File: src/core/contracts/AlgebraPool.sol [Line 482](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L482)
-
-```
-TransferHelper.safeTransfer(token1, sender, receivedAmount1 - amount1);
-```
-
-The above operation cannot underflow due to the check [if (receivedAmount1 > amount1)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L481)
-
-File: src/core/contracts/AlgebraPool.sol [Line 660](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L660)
-
-```
-TransferHelper.safeTransfer(token0, sender, uint256(amountRequired.sub(amount0)));
-```
-
-The above operation cannot underflow due to the check [if (amount0 < amountRequired)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L660)
-
-File: src/core/contracts/AlgebraPool.sol [Line 664](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L664)
-
-```
-TransferHelper.safeTransfer(token1, sender, uint256(amountRequired.sub(amount1)));
-```
-
-The above operation cannot underflow due to the check [if (amount1 < amountRequired)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L664)
-
-
-### 5- `x += y/x -= y` costs more gas than `x = x + y/x = x - y` for state variables :
+### 4- `x += y/x -= y` costs more gas than `x = x + y/x = x - y` for state variables :
 
 There are 4 instances of this issue:
 
@@ -183,7 +127,7 @@ File: src/core/contracts/AlgebraPool.sol [Line 945](https://github.com/code-423n
 totalFeeGrowth1Token += FullMath.mulDiv(paid1 - fees1, Constants.Q128, _liquidity);
 ```
 
-### 6- Splitting `require()` statements that uses `&&` saves gas (saves 8 gas per &&) :
+### 5- Splitting `require()` statements that uses `&&` saves gas (saves 8 gas per &&) :
 
 There are 6 instances of this issue :
 
@@ -204,7 +148,7 @@ File: src/core/contracts/DataStorageOperator.sol
 46       require(_feeConfig.gamma1 != 0 && _feeConfig.gamma2 != 0 && _feeConfig.volumeGamma != 0, 'Gammas must be > 0'); 
 ```
 
-### 7- It costs more gas to initialize variables to zero than to let the default of zero be applied (saves ~3 gas per instance) :
+### 6- It costs more gas to initialize variables to zero than to let the default of zero be applied (saves ~3 gas per instance) :
 
 If a variable is not set/initialized, it is assumed to have the default value (0 for uint or int, false for bool, address(0) for address…). Explicitly initializing it with its default value is an anti-pattern and wastes gas.
 
@@ -215,7 +159,7 @@ File: src/core/contracts/libraries/DataStorage.sol [Line 307](https://github.com
 for (uint256 i = 0; i < secondsAgos.length; i++)
 ```    
 
-### 8- Use of ++i cost less gas than i++/i=i+1 in for loops :
+### 7- Use of `++i` cost less gas than `i++/i=i+1` in for loops :
 
 There is 1 instance of this issue:
 
@@ -224,7 +168,7 @@ File: src/core/contracts/libraries/DataStorage.sol [Line 307](https://github.com
 for (uint256 i = 0; i < secondsAgos.length; i++)
 ```    
 
-### 9- ++i/i++ should be unchecked{++i}/unchecked{i++} when it is not possible for them to overflow, as in the case when used in for & while loops :
+### 8- `++i/i++` should be `unchecked{++i}/unchecked{i++}` when it is not possible for them to overflow, as in the case when used in for & while loops :
 
 There is 1 instance of this issue:
 
@@ -233,13 +177,13 @@ File: src/core/contracts/libraries/DataStorage.sol [Line 307](https://github.com
 for (uint256 i = 0; i < secondsAgos.length; i++)
 ```    
 
-### 10- Use more recent solidity versions :
+### 9- Use more recent solidity versions :
 
 All contracts contained in this project use an old solidity version `pragma solidity =0.7.6`, consider use a solidity version of at least 0.8.4 to get access to Custom errors which are cheaper than revert strings (cheaper deployment cost and runtime cost when the revert condition is met) while providing the same amount of information.
 
-### 11- Functions guaranteed to revert when called by normal users can be marked `payable` :
+### 10- Functions guaranteed to revert when called by normal users can be marked `payable` :
 
-If a function modifier such as `onlyAdmin` is used, the function will revert if a normal user tries to pay the function. Marking the function as payable will lower the gas cost for the owner because the compiler will not include checks for whether a payment was provided. The extra opcodes avoided are : 
+If a function modifier such as `onlyOwner` is used, the function will revert if a normal user tries to pay the function. Marking the function as payable will lower the gas cost for the owner because the compiler will not include checks for whether a payment was provided. The extra opcodes avoided are : 
 
 CALLVALUE(gas=2), DUP1(gas=3), ISZERO(gas=3), PUSH2(gas=3), JUMPI(gas=10), PUSH1(gas=3), DUP1(gas=3), REVERT(gas=0), JUMPDEST(gas=1), POP(gas=2). 
 Which costs an average of about 21 gas per call to the function, in addition to the extra deployment cost
