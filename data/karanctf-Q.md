@@ -28,3 +28,20 @@ PriceMovementMath.sol:70:        require((product = amount * price) / amount == 
 PriceMovementMath.sol:71:        require(liquidityShifted > product); // in addition, we must check that the denominator does not underflow
 PriceMovementMath.sol:87:        require(price > quotient);
 ```
+
+## [N-02] Use more recent version of Solidity
+```solidity
+AlgebraPoolDeployer.sol:2:pragma solidity =0.7.6;
+TokenDeltaMath.sol:2:pragma solidity =0.7.6;
+AlgebraFactory.sol:2:pragma solidity =0.7.6;
+Constants.sol:2:pragma solidity =0.7.6;
+TickTable.sol:2:pragma solidity =0.7.6;
+AdaptiveFee.sol:2:pragma solidity =0.7.6;
+PoolImmutables.sol:2:pragma solidity =0.7.6;
+TickManager.sol:2:pragma solidity =0.7.6;
+AlgebraPool.sol:2:pragma solidity =0.7.6;
+DataStorageOperator.sol:2:pragma solidity =0.7.6;
+PoolState.sol:2:pragma solidity =0.7.6;
+DataStorage.sol:2:pragma solidity =0.7.6;
+PriceMovementMath.sol:2:pragma solidity =0.7.6;
+```
