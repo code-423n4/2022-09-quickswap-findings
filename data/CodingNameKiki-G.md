@@ -1,7 +1,6 @@
 ## Using unchecked blocks to save gas
 
-Solidity version 0.8+ comes with implicit overflow and underflow checks on unsigned integers, when it is not possible
-for the arithmetic operation to underflow or overflow. The operation should be unchecked to save gas.
+When it is not possible for the arithmetic operation to underflow or overflow. The operation should be unchecked to save gas.
 
 1.Consider unchecking the following arithmetic operations:
 
