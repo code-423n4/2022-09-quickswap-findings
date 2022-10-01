@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "rbserver",
+  "address": "0x4bd9605a3e546f3400df2c2be7b1c775aeea56bd",
+  "risk": "2",
+  "title": "It is possible that, after swapping, extra input token amount is transferred from user to pool but pool does not give user output token amount that corresponds to the extra input token amount",
+  "issueId": 255,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/255"
+}
