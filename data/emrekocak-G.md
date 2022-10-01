@@ -47,3 +47,22 @@ ___
   
 Instance includes:  
 [`src/core/contracts/libraries/DataStorage.sol:307`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L307)
+___
+## USE A MORE RECENT VERSION OF SOLIDITY
+
+Use a solidity version of at least 0.8.0 to get overflow protection without `LowGasSafeMath` Use a solidity version of at least 0.8.2 to get simple compiler automatic inlining Use a solidity version of at least 0.8.3 to get better struct packing and cheaper multiple storage reads Use a solidity version of at least 0.8.4 to get custom errors, which are cheaper at deployment than `revert()/require()` strings Use a solidity version of at least 0.8.10 to have external calls skip contract existence checks if the external call has a return value.
+
+Instances include:
+[`src/core/contracts/AlgebraFactory.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L2) 
+[`src/core/contracts/AlgebraPool.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L2)
+[`src/core/contracts/AlgebraPoolDeployer.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPoolDeployer.sol#L2)
+[`src/core/contracts/DataStorageOperator.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/DataStorageOperator.sol#L2)
+[`src/core/contracts/libraries/AdaptiveFee.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/AdaptiveFee.sol#L2)
+[`src/core/contracts/libraries/Constants.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/Constants.sol#L2)
+[`src/core/contracts/libraries/DataStorage.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/DataStorage.sol#L2)
+[`src/core/contracts/libraries/PriceMovementMath.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/PriceMovementMath.sol#L2)
+[`src/core/contracts/libraries/TickManager.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TickManager.sol#L2)
+[`src/core/contracts/libraries/TickTable.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TickTable.sol#L2)
+[src/core/contracts/libraries/TokenDeltaMath.sol`:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TokenDeltaMath.sol#L2)
+[`src/core/contracts/base/PoolImmutables.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/base/PoolImmutables.sol#L2)
+[`src/core/contracts/base/PoolState.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/base/PoolState.sol#L2)
