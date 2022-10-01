@@ -23,3 +23,8 @@ While the codebase applies this to most addresses in setters...
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L546
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L275
 In address parameter of function _payCommunityFee make a zero address check!!!
+
+Issue 3.
+You Should declare bool exactInput on L686 outside of the struct inside a function local variable to strictly true or false otherwise it will set its default value to false..
+through which other condition/statement using this parameter can get harmful effect of using this bool parameter with its default value false!!
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L686
