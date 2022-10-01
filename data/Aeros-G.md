@@ -27,7 +27,7 @@ Fix:
     require(tokenA != tokenB);
     (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
     require(token0 != address(0));
-    mapping(address => mapping(address => address)) _poolByPair = poolByPair;
+    mapping(address => mapping(address => address)) memory _poolByPair = poolByPair;
     require(_poolByPair[token0][token1] == address(0));
  
     IDataStorageOperator dataStorage = new DataStorageOperator(computeAddress(token0, token1));
