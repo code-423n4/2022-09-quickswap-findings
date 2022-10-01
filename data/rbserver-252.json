@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "rbserver",
+  "address": "0x4bd9605a3e546f3400df2c2be7b1c775aeea56bd",
+  "risk": "2",
+  "title": "Anyone who is malicious can front-run initialize transaction to set pool's initial price to a value that deviates quite a lot from market price, which discourages users from using the pool and makes the pool useless",
+  "issueId": 252,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/252"
+}
