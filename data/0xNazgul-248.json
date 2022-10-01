@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "0xNazgul",
+  "address": "0x714af4c78135ec866a3cd34755bdb59cdb9b7246",
+  "risk": "2",
+  "title": "[NAZ-M1] Users Can Accidentally Burn Surplus of Paid Tokens In `mint()`",
+  "issueId": 248,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/248"
+}
