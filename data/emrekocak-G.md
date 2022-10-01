@@ -63,6 +63,6 @@ Instances include:
 [`src/core/contracts/libraries/PriceMovementMath.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/PriceMovementMath.sol#L2)
 [`src/core/contracts/libraries/TickManager.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TickManager.sol#L2)
 [`src/core/contracts/libraries/TickTable.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TickTable.sol#L2)
-[src/core/contracts/libraries/TokenDeltaMath.sol`:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TokenDeltaMath.sol#L2)
+[`src/core/contracts/libraries/TokenDeltaMath.sol`:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/TokenDeltaMath.sol#L2)
 [`src/core/contracts/base/PoolImmutables.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/base/PoolImmutables.sol#L2)
 [`src/core/contracts/base/PoolState.sol:2`](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/base/PoolState.sol#L2)
