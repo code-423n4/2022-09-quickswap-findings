@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "Jeiwan",
+  "address": "0xaf8dde65b84ae5d77e4f9a18cdc854e324a41b04",
+  "risk": "3",
+  "title": "Pool contract initialization can be front run, leading to draining of initial liquidity",
+  "issueId": 133,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/133"
+}
