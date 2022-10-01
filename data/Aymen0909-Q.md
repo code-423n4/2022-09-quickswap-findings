@@ -4,7 +4,7 @@
 
 |               | Issue         | Risk     | Instances     |
 | :-------------: |:-------------|:-------------:|:-------------:|
-| 1      | Solidity version less than 0.8 should use `safeMath` library | NC |  |
+| 1      | Solidity version less than 0.8 should use `safeMath` library | Low |  |
 | 2      | Changing ownership missing check for `address(0)` in `setOwner` function | Low | 1 |
 | 3      | Missing checks for `address(0)` when assigning values to `address` state variables | Low | 3 |
 | 4      | Setters should check the input value and revert if it's the zero address or zero | Low | 3 |
