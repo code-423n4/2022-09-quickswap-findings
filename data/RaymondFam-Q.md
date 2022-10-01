@@ -23,13 +23,17 @@ Consider having events associated with setter functions emit both the new and ol
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L77-L95
 
 ## Typo Mistakes
-The comments associated with the following code lines should have `... to a LP` replaced with `... to an LP`:
+The comment associated with the following code lines should have `... to a LP` replaced with `... to an LP`:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L46-L47
 
-The comments associated with the following code lines should have `isTopTick` replaced with `isBottomTick`:
+The comment associated with the following code lines should have `isTopTick` replaced with `isBottomTick`:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L309
+
+The comment associated with the following code lines should have `... factor the ...` replaced with `... factor for the ...`:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/AdaptiveFee.sol#L18
 
 ## Missing Require Error Message
 Consider adding a less than 32 character string message to all require statements just so that a relevant message would be displayed just in case of a revert. Here are some of the instances entailed:
@@ -74,3 +78,19 @@ The following contract is found to be having inadequate NatSpec:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/libraries/Constants.sol
 
+## Sanity Check for Pool Address
+Pool address is computed/generated twice in `createPool()` in `AlgebraFactory.sol` with no tests catered `computeAddress()`. Consider refactoring the following lines of codes:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L65-L69
+
+```
+    address cache = computeAddress(token0, token1);
+
+    IDataStorageOperator dataStorage = new DataStorageOperator(cache);
+
+    dataStorage.changeFeeConfiguration(baseFeeConfiguration);
+
+    pool = IAlgebraPoolDeployer(poolDeployer).deploy(address(dataStorage), address(this), token0, token1);
+
+    require(pool == cache, 'Invalid pool address');
+```
