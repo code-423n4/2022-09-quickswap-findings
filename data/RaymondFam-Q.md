@@ -23,9 +23,13 @@ Consider having events associated with setter functions emit both the new and ol
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L77-L95
 
 ## Typo Mistakes
-The comments associated with the following code lines should have "... to a LP" replaced with "... to an LP":
+The comments associated with the following code lines should have `... to a LP` replaced with `... to an LP`:
 
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L46-L47
+
+The comments associated with the following code lines should have `isTopTick` replaced with `isBottomTick`:
+
+https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L309
 
 ## Missing Require Error Message
 Consider adding a less than 32 character string message to all require statements just so that a relevant message would be displayed just in case of a revert. Here are some of the instances entailed:
