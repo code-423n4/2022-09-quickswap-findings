@@ -6,19 +6,9 @@ https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/Alg
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L610
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L434
 
-Issue2.
-bool unlocked = globalState.unlocked;
 
-     globalState.unlocked = false; // lock will not be released in this function
-      require(unlocked, 'LOK'); 
 
-here u can simply do 
-
-bool globalState.unlocked;
-      requireglobalState.unlocked,'LOK');  //it will save u a gas since bool default value is false..Initialize to default state is redundant.
-https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L728-L731
-
-Issue 3.
+Issue 2.
 https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L718
 uint32 blockTimestamp converting it into 'uint256' will save you a gas!!!
 The EVM only operates on 32 bytes/ 256 bits at a time. 
