@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "erictee",
+  "address": "0x26ba8afe953af1586316020c2610d801881bc1be",
+  "risk": "2",
+  "title": "single-step process for critical ownership transfer is risky",
+  "issueId": 131,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/131"
+}
