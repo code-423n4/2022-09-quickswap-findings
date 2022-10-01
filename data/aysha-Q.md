@@ -66,3 +66,11 @@ https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aa
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPool.sol#L892
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPool.sol#L959
 ==========================================================
+Modifier side-effects
+Modifiers should only implement checks and not make state changes and external calls which violates the checks-effects-interactions pattern: https://solidity.readthedocs.io/en/develop/security-considerations.html#use-the-checks-effects-interactions-pattern
+These side-effects may go unnoticed by developers/auditors because the modifier code is typically far from the function implementation. 
+https://consensys.net/blog/blockchain-development/solidity-best-practices-for-smart-contract-security/
+
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/base/PoolState.sol#L42
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/base/PoolState.sol#L44
+==========================================================
