@@ -130,3 +130,37 @@ Multiple accesses of a mapping/array should use a local variable cache
 The instances below point to the second+ access of a value inside a mapping/array, within a function. Caching a mapping's value in a local storage or calldata variable when the value is accessed multiple times, saves ~42 gas per access due to not having to recalculate the key's keccak256 hash (Gkeccak256 - 30 gas) and that calculation's associated stack operations. Caching an array's struct avoids recalculating the array offsets into memory/calldata
 
 https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/DataStorageOperator.sol#L138-L140
+==========================================================
+
+Prefix Increments
+Prefix increments are cheaper than postfix increments - 6 gas. This can mean interesting savings in for loops.
+Change variable++ to ++variable.
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L307
+==========================================================
+
+Functions With Access Control Cheaper If Payable
+A function with access control marked as payable will lbe cheaper for legitimate callers: the compiler removes checks for msg.value, saving approximately 20 gas per function call.
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraFactory.sol#L77
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraFactory.sol#L84
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraFactory.sol#L108
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPoolDeployer.sol#L36
+==========================================================
+
+Constants Can Be Private
+Marking constants as private save gas upon deployment, as the compiler does not have to create getter functions for these variables. It is worth noting that a private variable can still be read using either the verified contract source code or the bytecode.
+For immutable variables written via constructor parameters, you can also look the contract deployment transaction.
+
+Proof of Concept
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraFactory.sol#L116
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/libraries/DataStorage.sol#L12
+Recommended Mitigation Steps
+Make these constants private instead of public
+==========================================================
+
+Clones For Cheap Contract Deployment
+There’s a way to save a significant amount of gas on deployment using Clones: https://www.youtube.com/watch?v=3Mw-pMmJ7TA .
+
+With the standard way using the new keyword, each contract created contains the entire logic. Using proxies allow only the first implementation to contain the logic, saving deployment costs on subsequent instances deployed.
+https://github.com/code-423n4/2022-09-quickswap/blob/15ea643c85ed936a92d2676a7aabf739b210af39/src/core/contracts/AlgebraPool.sol#L547
+==========================================================
+
