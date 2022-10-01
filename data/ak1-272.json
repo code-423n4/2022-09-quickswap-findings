@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "ak1",
+  "address": "0xf7a08c2c341bde5e17103d4780d1b465011a2a31",
+  "risk": "2",
+  "title": "AlgebraPoolDeployer.sol#L50-L51 : After the pool deployment, the memory of \"parameters's\" members are not cleaned.",
+  "issueId": 272,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/272"
+}
