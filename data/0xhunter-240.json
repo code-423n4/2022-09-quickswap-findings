@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "0xhunter",
+  "address": "0x32cc5d8c4ab179d5c7da1a012680385a9f8dfbe6",
+  "risk": "3",
+  "title": "fake flash loan can grief the pool",
+  "issueId": 240,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/240"
+}
