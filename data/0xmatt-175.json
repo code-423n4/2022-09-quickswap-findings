@@ -1,0 +1,9 @@
+{
+  "contest": 166,
+  "handle": "0xmatt",
+  "address": "0xE6d324a6B7904160ACEa6144cc80809dbF337F55",
+  "risk": "3",
+  "title": "Pool initialization does not protect against front-running attacks.",
+  "issueId": 175,
+  "issueUrl": "https://github.com/code-423n4/2022-09-quickswap-findings/issues/175"
+}
