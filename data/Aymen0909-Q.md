@@ -93,6 +93,10 @@ File: src/core/contracts/AlgebraFactory.sol
 
 [ function setVaultAddress(address _vaultAddress)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraFactory.sol#L91-L95)
 
+File: src/core/contracts/AlgebraPool.sol
+
+[function setIncentive(address virtualPoolAddress)](https://github.com/code-423n4/2022-09-quickswap/blob/main/src/core/contracts/AlgebraPool.sol#L959-L964)
+
 #### Mitigation
 Add non-zero address checks in the setters for the instances aforementioned.
 
