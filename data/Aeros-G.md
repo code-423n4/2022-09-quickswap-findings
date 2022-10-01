@@ -1,47 +1,5 @@
 ### Gas Optimizations:
 
-In **src/core/contracts/AlgebraFactory.sol**, the *createPool()* method uses the *poolByPair* mapping 3 times. It should be cached in local memory to save gas.
-
-Original:
-
-    function createPool(address tokenA, address tokenB) external override returns (address pool) {
-      require(tokenA != tokenB);
-      (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-      require(token0 != address(0));
-      require(poolByPair[token0][token1] == address(0));
- 
-      IDataStorageOperator dataStorage = new DataStorageOperator(computeAddress(token0, token1));
- 
-      dataStorage.changeFeeConfiguration(baseFeeConfiguration);
- 
-      pool = IAlgebraPoolDeployer(poolDeployer).deploy(address(dataStorage), address(this), token0, token1);
- 
-      poolByPair[token0][token1] = pool; // to avoid future addresses comparing we are populating the mapping twice
-      poolByPair[token1][token0] = pool; // since poolByPair is used 3 times in this function, it should be cached in stack variable rather than being reread from storage
-      emit Pool(token0, token1, pool);
-    }
-
-Fix:
-
-    function createPool(address tokenA, address tokenB) external override returns (address pool) { 
-    require(tokenA != tokenB);
-    (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-    require(token0 != address(0));
-    mapping(address => mapping(address => address)) memory _poolByPair = poolByPair;
-    require(_poolByPair[token0][token1] == address(0));
- 
-    IDataStorageOperator dataStorage = new DataStorageOperator(computeAddress(token0, token1));
- 
-    dataStorage.changeFeeConfiguration(baseFeeConfiguration);
- 
-    pool = IAlgebraPoolDeployer(poolDeployer).deploy(address(dataStorage), address(this), token0, token1);
- 
-    _poolByPair[token0][token1] = pool; // to avoid future addresses comparing we are populating the mapping twice
-    _poolByPair[token1][token0] = pool;
-    emit Pool(token0, token1, pool);
-    }
-
-
 Splitting up *require()/revert()* statements that use *&&* saves gas.
 
 Places where *require()* statements exist with *&&* (and should be split up):
