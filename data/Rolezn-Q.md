@@ -7,25 +7,22 @@ Severity: Low
 
 ## Proof Of Concept
 
+	owner = _owner;
+https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L80
 
-	function createPool(address tokenA, address tokenB) external override returns (address pool) {
-https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L59
+	farmingAddress = _farmingAddress;
+https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L87
 
-	function setOwner(address _owner) external override onlyOwner {
-https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L77
+	vaultAddress = _vaultAddress;
+https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L94
 
-	function setFarmingAddress(address _farmingAddress) external override onlyOwner {
-https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L84
-
-	function setVaultAddress(address _vaultAddress) external override onlyOwner {
-https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraFactory.sol#L91
-
-	function deploy(
+    function deploy(
     address dataStorage,
     address _factory,
     address token0,
     address token1
-  ) external override onlyFactory returns (address pool) {
+
+
 https://github.com/code-423n4/2022-09-quickswap/tree/main/src/core/contracts/AlgebraPoolDeployer.sol#L44
 
 ## Recommended Mitigation Steps
