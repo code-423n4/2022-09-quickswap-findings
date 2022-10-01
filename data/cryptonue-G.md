@@ -21,9 +21,16 @@ Custom errors are defined using the error statement, which can be used inside an
 
 Instances include:
 
+AlgebraFactory.sol#L109-110
 ```
 require(uint256(alpha1) + uint256(alpha2) + uint256(baseFee) <= type(uint16).max, 'Max fee exceeded');
 require(gamma1 != 0 && gamma2 != 0 && volumeGamma != 0, 'Gammas must be > 0');
+```
+
+DataStorageOperator.sol#L45-46
+```
+require(uint256(_feeConfig.alpha1) + uint256(_feeConfig.alpha2) + uint256(_feeConfig.baseFee) <= type(uint16).max, 'Max fee exceeded');
+require(_feeConfig.gamma1 != 0 && _feeConfig.gamma2 != 0 && _feeConfig.volumeGamma != 0, 'Gammas must be > 0');
 ```
 
 
@@ -32,3 +39,18 @@ require(gamma1 != 0 && gamma2 != 0 && volumeGamma != 0, 'Gammas must be > 0');
 If a variable is not set/initialized, it is assumed to have the default value (0 for uint, false for bool, address(0) for address…). Explicitly initializing it with its default value is an anti-pattern and wastes gas.
 
 As an example: `for (uint256 i = 0; i < secondsAgos.length; i++) ` (DataStorage.sol#L307)
+
+# SPLITTING REQUIRE() STATEMENTS THAT USE && SAVES GAS
+
+If you’re using the Optimizer at 200, instead of using the && operator in a single require statement to check multiple conditions, I suggest using multiple require statements with 1 condition per require statement:
+
+example instances:
+```
+AlgebraFactory.sol#L110      require(gamma1 != 0 && gamma2 != 0 && volumeGamma != 0, 'Gammas must be > 0');
+AlgebraPool.sol#L739          require(limitSqrtPrice < currentPrice && limitSqrtPrice > TickMath.MIN_SQRT_RATIO, 'SPL');
+AlgebraPool.sol#L743          require(limitSqrtPrice > currentPrice && limitSqrtPrice < TickMath.MAX_SQRT_RATIO, 'SPL');
+AlgebraPool.sol#L953          require((communityFee0 <= Constants.MAX_COMMUNITY_FEE) && (communityFee1 <= Constants.MAX_COMMUNITY_FEE));
+AlgebraPool.sol#L968          require(newLiquidityCooldown <= Constants.MAX_LIQUIDITY_COOLDOWN && liquidityCooldown != newLiquidityCooldown);
+DataStorageOperator.sol#L46      require(_feeConfig.gamma1 != 0 && _feeConfig.gamma2 != 0 && _feeConfig.volumeGamma != 0, 'Gammas must be > 0');
+
+```
