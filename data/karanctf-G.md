@@ -119,3 +119,21 @@ If you're using the Optimizer at 200, instead of using the `&&` operator in a si
 ```solidity
 AlgebraFactory.sol:110:    require(gamma1 != 0 && gamma2 != 0 && volumeGamma != 0, 'Gammas must be > 0');
 ```
+
+
+## [G-08] Use more recent version of Solidity
+```solidity
+AlgebraPoolDeployer.sol:2:pragma solidity =0.7.6;
+TokenDeltaMath.sol:2:pragma solidity =0.7.6;
+AlgebraFactory.sol:2:pragma solidity =0.7.6;
+Constants.sol:2:pragma solidity =0.7.6;
+TickTable.sol:2:pragma solidity =0.7.6;
+AdaptiveFee.sol:2:pragma solidity =0.7.6;
+PoolImmutables.sol:2:pragma solidity =0.7.6;
+TickManager.sol:2:pragma solidity =0.7.6;
+AlgebraPool.sol:2:pragma solidity =0.7.6;
+DataStorageOperator.sol:2:pragma solidity =0.7.6;
+PoolState.sol:2:pragma solidity =0.7.6;
+DataStorage.sol:2:pragma solidity =0.7.6;
+PriceMovementMath.sol:2:pragma solidity =0.7.6;
+```
